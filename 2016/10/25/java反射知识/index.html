@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//litten.me">
+  <title>java反射知识 | WangXuan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Class类的使用12345678910111213141516171819202122232425262728293031package com.wx.reflect;public class ClassDemo1&amp;#123;	public static void main(String[] args)&amp;#123;		// Foo类的实例对象如何表示		Foo foo1 = new Foo();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java反射知识">
+<meta property="og:url" content="//litten.me/2016/10/25/java反射知识/index.html">
+<meta property="og:site_name" content="WangXuan">
+<meta property="og:description" content="Class类的使用12345678910111213141516171819202122232425262728293031package com.wx.reflect;public class ClassDemo1&amp;#123;	public static void main(String[] args)&amp;#123;		// Foo类的实例对象如何表示		Foo foo1 = new Foo();">
+<meta property="og:updated_time" content="2016-10-25T09:41:31.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java反射知识">
+<meta name="twitter:description" content="Class类的使用12345678910111213141516171819202122232425262728293031package com.wx.reflect;public class ClassDemo1&amp;#123;	public static void main(String[] args)&amp;#123;		// Foo类的实例对象如何表示		Foo foo1 = new Foo();">
+  
+    <link rel="alternative" href="/atom.xml" title="WangXuan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/wx.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">王瑄</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/photos">相册</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">王瑄</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/wx.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">王瑄</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/photos">相册</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-java反射知识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java反射知识
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Class类的使用"><a href="#Class类的使用" class="headerlink" title="Class类的使用"></a>Class类的使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassDemo1</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="comment">// Foo类的实例对象如何表示</span></div><div class="line">		Foo foo1 = <span class="keyword">new</span> Foo();</div><div class="line">		<span class="comment">// Foo这个类也是一个实例对象，Class类的实例对象，如何表示？</span></div><div class="line">		<span class="comment">// 任何一个类都是Class的实例对象，有三种表示方式：</span></div><div class="line">		<span class="comment">// 第一种：实际上是任何一个类都有一个隐含的静态成员变量class</span></div><div class="line">		Class c1 = Foo.class;</div><div class="line">		<span class="comment">// 第二种：已经知道该类对象，通过getClass()方法</span></div><div class="line">		Class c2 = foo1.getClass();</div><div class="line">		<span class="comment">/** 官网解释：c1,c2表示了Foo类的类类型(class type) </span></div><div class="line">			万事万物皆对象。</div><div class="line">			类也是一个对象，是Class类的对象，</div><div class="line">			这个对象我们称为该类的类类型。</div><div class="line">		**/</div><div class="line">		<span class="comment">// 一个类只可能是Class类的一个实例对象</span></div><div class="line">		System.out.println(c1 == c2); <span class="comment">// true</span></div><div class="line">		<span class="comment">// 第三种：</span></div><div class="line">		Class c3 = Class.forName(<span class="string">"com.wx.reflect.Foo"</span>);</div><div class="line">		System.out.println(c1 == c3); <span class="comment">// true</span></div><div class="line">		<span class="comment">// 可以通过类的类类型创建该类的实例</span></div><div class="line">		Foo foo2 = (Foo)c1.newInstance();</div><div class="line">		foo2.print();</div><div class="line"> 	&#125;	</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"this is foo method!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="动态加载类"><a href="#动态加载类" class="headerlink" title="动态加载类"></a>动态加载类</h2><blockquote>
+<p><code>Class.forName(&quot;类的全称&quot;);</code><br>不仅表示了类的类类型，还表示动态加载类。<br>编译时刻加载是静态加载类，运行时刻加载是动态加载类。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect.office;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 办公软件的接口</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OfficeAble</span> </span>&#123;	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.wx.reflect.office;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Word</span> <span class="keyword">implements</span> <span class="title">OfficeAble</span></span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"word start..."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.wx.reflect.office;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Excel</span> <span class="keyword">implements</span> <span class="title">OfficeAble</span></span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"excel start..."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.wx.reflect.office;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 动态加载类</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Office</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="comment">// 动态加载类，在运行时加载</span></div><div class="line">			<span class="comment">// 通过传入参数：com.wx.reflect.office.Word运行</span></div><div class="line">			Class c = Class.forName(args[<span class="number">0</span>]);</div><div class="line">			<span class="comment">// 通过类类型，创建该类的对象</span></div><div class="line">			OfficeAble oa = (OfficeAble) c.newInstance();</div><div class="line">			oa.start();</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="获取方法信息"><a href="#获取方法信息" class="headerlink" title="获取方法信息"></a>获取方法信息</h2><blockquote>
+<p>基本数据类型，void关键字都存在类类型。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect.util;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Field;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 获取类的信息</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassUtils</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 打印类的信息：成员函数的信息</div><div class="line">	 * <span class="doctag">@param</span> obj 该对象所属类的信息</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMethodMessage</span><span class="params">(Object obj)</span></span>&#123;</div><div class="line">		Class c = obj.getClass(); <span class="comment">// 传递的是哪个子类对象，c就是该子类的类类型</span></div><div class="line">		<span class="comment">// 获取类的名称</span></div><div class="line">		System.out.println(<span class="string">"类的名称是："</span>+c.getName());</div><div class="line">		<span class="comment">/**</span></div><div class="line">		 * 一个成员方法就是一个Method对象</div><div class="line">		 * getMethods()方法获取的是所有public的函数，包括父类继承而来的</div><div class="line">		 * getDeclareMethods() 获取的是该类自己声明的函数，不问访问权限</div><div class="line">		 */</div><div class="line">		Method[] ms = c.getMethods(); <span class="comment">// c.getDeclareMethod();</span></div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;ms.length; i++)&#123;</div><div class="line">			<span class="comment">// 得到方法的返回值类型的类类型</span></div><div class="line">			Class returnType = ms[i].getReturnType();</div><div class="line">			System.out.print(returnType.getName()+<span class="string">" "</span>);</div><div class="line">			<span class="comment">// 得到方法的名称</span></div><div class="line">			System.out.print(ms[i].getName()+<span class="string">"("</span>);</div><div class="line">			<span class="comment">// 得到方法的参数类型---&gt;获取的是参数的类类型</span></div><div class="line">			Class[] paramType = ms[i].getParameterTypes();</div><div class="line">			<span class="keyword">if</span>(paramType.length == <span class="number">1</span>)&#123;</div><div class="line">				System.out.print(paramType[paramType.length-<span class="number">1</span>].getName());</div><div class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(paramType.length &gt; <span class="number">1</span>)&#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;paramType.length-<span class="number">1</span>; j++) &#123;</div><div class="line">					System.out.print(paramType[j].getName()+<span class="string">","</span>);</div><div class="line">				&#125;</div><div class="line">				System.out.print(paramType[paramType.length-<span class="number">1</span>].getName());</div><div class="line">			&#125;</div><div class="line">			System.out.println(<span class="string">")"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 成员变量也是对象</div><div class="line">	 * java.lang.reflect.Field</div><div class="line">	 * Field类封装了关于成员变量的操作</div><div class="line">	 * getFields()方法获取的是所有public成员变量的信息</div><div class="line">	 * getDeclaredFields()获取到的是该类自己声明的成员变量的信息</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getFieldMessage</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">		Class c = obj.getClass();</div><div class="line">		Field[] fs = c.getDeclaredFields();</div><div class="line">		<span class="keyword">for</span> (Field field : fs) &#123;</div><div class="line">			<span class="comment">// 得到成员变量的类类型</span></div><div class="line">			Class fieldType = field.getType();</div><div class="line">			String typeName = fieldType.getName();</div><div class="line">			<span class="comment">// 得到成员变量的名称</span></div><div class="line">			String fieldName = field.getName();</div><div class="line">			System.out.println(typeName+<span class="string">" "</span>+fieldName);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取构造函数的信息</div><div class="line">	 * <span class="doctag">@param</span> obj</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getConstructorMessage</span><span class="params">(Object obj)</span></span>&#123;</div><div class="line">		Class c = obj.getClass();</div><div class="line">		Constructor[] cs = c.getConstructors();</div><div class="line">		<span class="keyword">for</span> (Constructor constructor : cs) &#123;</div><div class="line">			System.out.print(constructor.getName()+<span class="string">"("</span>);</div><div class="line">			Class[] paramTypes = constructor.getParameterTypes();</div><div class="line">			<span class="keyword">for</span> (Class class1 : paramTypes) &#123;</div><div class="line">				System.out.print(class1.getName()+<span class="string">","</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.println(<span class="string">")"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">package</span> com.wx.reflect.util;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 测试类</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassUtilTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		String s = <span class="string">"hello"</span>;</div><div class="line">		System.out.println(<span class="string">"---------函数的信息-----------"</span>);</div><div class="line">		ClassUtils.getMethodMessage(s);</div><div class="line">		System.out.println(<span class="string">"---------变量的信息-----------"</span>);</div><div class="line">		ClassUtils.getFieldMessage(s);</div><div class="line">		System.out.println(<span class="string">"---------构造函数的信息-----------"</span>);</div><div class="line">		ClassUtils.getConstructorMessage(s);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="方法反射的基本操作"><a href="#方法反射的基本操作" class="headerlink" title="方法反射的基本操作"></a>方法反射的基本操作</h2><blockquote>
+<ol>
+<li>如何获取某个方法？<br>方法的名称和方法的参数列表才能唯一决定某个方法。</li>
+<li>方法的反射操作<br><code>method.invoke(对象, 参数列表);</code></li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect.method;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 方法的反射</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodReflect</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">// 获取类的类类型</span></div><div class="line">		Methods m = <span class="keyword">new</span> Methods();</div><div class="line">		Class c = m.getClass();</div><div class="line">		<span class="keyword">try</span> &#123; <span class="comment">// 获取类的方法，通过方法名+参数列表</span></div><div class="line">	<span class="comment">//		Method m1 = c.getMethod("print", new Class[]&#123;int.class, int.class&#125;);</span></div><div class="line">			Method m1 = c.getMethod(<span class="string">"print"</span>, <span class="keyword">int</span>.class, <span class="keyword">int</span>.class);</div><div class="line">			<span class="comment">// 方法反射操作</span></div><div class="line">			<span class="comment">// 方法有返回值，返回的就方法的返回值，方法没有返回值，返回NULL</span></div><div class="line">			Object o = m1.invoke(m, <span class="number">10</span>,<span class="number">20</span>);</div><div class="line">			System.out.println(<span class="string">"-------------------"</span>);</div><div class="line">			Method m2 = c.getMethod(<span class="string">"print"</span>, <span class="keyword">new</span> Class[]&#123;String.class, String.class&#125;);</div><div class="line">			Object o2 = m2.invoke(m, <span class="string">"shabi"</span>,<span class="string">"hello"</span>);</div><div class="line">			System.out.println(o2);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Methods</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">		System.out.println(a+b);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">print</span><span class="params">(String a, String b)</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> a.toUpperCase() +<span class="string">","</span>+ b.toLowerCase();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="通过反射了解集合泛型的本质"><a href="#通过反射了解集合泛型的本质" class="headerlink" title="通过反射了解集合泛型的本质"></a>通过反射了解集合泛型的本质</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect.collection;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 泛型是通过在编译时检查类型而完成类型限制的，而</div><div class="line"> * 反射的操作都是编译之后的操作，所以</div><div class="line"> * 通过反射的方式可以绕过编译给集合添加元素</div><div class="line"> * <span class="doctag">@author</span> WangQiong</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectDemo</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		ArrayList arr1 = <span class="keyword">new</span> ArrayList();</div><div class="line">		ArrayList&lt;String&gt; arr2 = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		Class c1 = arr1.getClass();</div><div class="line">		Class c2 = arr2.getClass();</div><div class="line">		System.out.println(c1 == c2); <span class="comment">// true</span></div><div class="line">		arr2.add(<span class="string">"hello"</span>);</div><div class="line">	<span class="comment">//	arr2.add(2); // 出错。限制类型</span></div><div class="line">		</div><div class="line">		<span class="comment">// 通过反射绕过编译</span></div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Method m = c2.getMethod(<span class="string">"add"</span>, Object.class);</div><div class="line">			m.invoke(arr2, <span class="number">20</span>);</div><div class="line">			System.out.println(arr2.size()); <span class="comment">// 2 说明：20加进了arr2</span></div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/25/java反射知识/" class="archive-article-date">
+  	<time datetime="2016-10-25T09:12:33.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-25</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/10/25/git入门/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          git入门
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="java反射知识" data-title="java反射知识" data-url="//litten.me/2016/10/25/java反射知识/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wangxuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 王瑄
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">wangxuan，一个无知的人。</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

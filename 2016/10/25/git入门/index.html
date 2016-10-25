@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//litten.me">
+  <title>git入门 | WangXuan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="创建版本库初始化一个仓库，使用 git init 命令。添加文件到git仓库，分两步：
+
+第一步，使用命令git add &amp;lt;file&amp;gt;，注意，可反复多次使用，添加多个文件。
+第二步，使用命令 git commit，完成。时光穿梭机要随时掌握工作区状态，使用git status命令。如果git status告诉你文件被修改过，使用git diff可以查看修改的内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git入门">
+<meta property="og:url" content="//litten.me/2016/10/25/git入门/index.html">
+<meta property="og:site_name" content="WangXuan">
+<meta property="og:description" content="创建版本库初始化一个仓库，使用 git init 命令。添加文件到git仓库，分两步：
+
+第一步，使用命令git add &amp;lt;file&amp;gt;，注意，可反复多次使用，添加多个文件。
+第二步，使用命令 git commit，完成。时光穿梭机要随时掌握工作区状态，使用git status命令。如果git status告诉你文件被修改过，使用git diff可以查看修改的内容。">
+<meta property="og:image" content="//litten.me/assets/img/statuschange.png">
+<meta property="og:updated_time" content="2016-10-25T11:01:13.334Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git入门">
+<meta name="twitter:description" content="创建版本库初始化一个仓库，使用 git init 命令。添加文件到git仓库，分两步：
+
+第一步，使用命令git add &amp;lt;file&amp;gt;，注意，可反复多次使用，添加多个文件。
+第二步，使用命令 git commit，完成。时光穿梭机要随时掌握工作区状态，使用git status命令。如果git status告诉你文件被修改过，使用git diff可以查看修改的内容。">
+<meta name="twitter:image" content="//litten.me/assets/img/statuschange.png">
+  
+    <link rel="alternative" href="/atom.xml" title="WangXuan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/wx.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">王瑄</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/photos">相册</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">王瑄</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/wx.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">王瑄</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/photos">相册</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-git入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git入门
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h2><p>初始化一个仓库，使用 <code>git init</code> 命令。<br>添加文件到git仓库，分两步：</p>
+<ul>
+<li>第一步，使用命令<code>git add &lt;file&gt;</code>，注意，<strong>可反复多次使用，添加多个文件。</strong></li>
+<li>第二步，使用命令 <code>git commit</code>，完成。<h2 id="时光穿梭机"><a href="#时光穿梭机" class="headerlink" title="时光穿梭机"></a>时光穿梭机</h2>要随时掌握工作区状态，使用<code>git status</code>命令。<br>如果<code>git status</code>告诉你文件被修改过，使用<code>git diff</code>可以查看修改的内容。</li>
+</ul>
+<a id="more"></a>
+<h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><ul>
+<li><code>HEAD</code>指向的版本就是当前的版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。<blockquote>
+<p>回退到上一个版本，<code>git reset --hard HEAD^</code>。</p>
+</blockquote>
+</li>
+<li><p>穿梭前，用<code>git log</code>可以查看历史提交记录，以确定要回退到哪个版本。</p>
+<blockquote>
+<p>如果嫌输出的信息太多，可以试试加上<code>--pretty=oneline</code>参数</p>
+</blockquote>
+</li>
+<li><p>要重返未来，使用<code>git reflog</code>查看历史命令，以便确定要回到未来的哪个版本。</p>
+<h3 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h3></li>
+<li>工作区：就是你电脑里能看到的目录。</li>
+<li>版本库：工作区有一个隐藏的目录<code>.git</code>,这个不算工作区，而是git版本库。</li>
+<li><p>暂存区：git版本库里面有很多东西，其中最重要的就是称为<code>stage</code>的暂存区。</p>
+<blockquote>
+<p>前面讲了我们把文件往git版本库里添加的时候，是分两步执行的：</p>
+<ul>
+<li>第一步是用<code>git add</code>把文件添加进去，其实就是把文件修改添加到暂存区。</li>
+<li>第二步是用<code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>暂存区状态的变化：<br><img src="/assets/img/statuschange.png" alt="statuschange.png"></p>
+<h3 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h3><p>每次修改，如果不<code>add</code>到暂存区，那就不会加入到<code>commit</code>中。</p>
+<h3 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h3></li>
+<li>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令：<code>git checkout -- file</code>。</li>
+<li>场景2：当你不但改乱了工作区的某个文件的内容，还添加到了暂存区，想丢弃掉修改，分两步，第一步用命令<code>git reset HEAD file</code>，就回到了场景1，第二步按场景1操作。</li>
+<li>场景3：已经提交了不合适的修改到版本库，想要撤销本次提交，参考<strong>版本回退</strong>，但前提是没有推送到远程库。<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3></li>
+<li>第一步，使用命令<code>rm</code>删除文件管理器中的没用的文件。</li>
+<li>第二步，使用<code>git status</code>，git会告诉你哪些文件被删除了。</li>
+<li>第三步，如果确实要从版本库中删除该文件，使用<code>git rm</code>删掉，并且<code>git commit</code>提交。</li>
+<li><p>第四步，如果是误删，使用<code>git checkout -- file</code>可以把误删的文件恢复到最新版本。</p>
+<blockquote>
+<p>注意：你只能恢复文件到最新版本，你会<strong>丢失最近一次提交后你修改的内容</strong>。</p>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>git是分布式版本控制系统，同一个git仓库，可以分布到不同的机器上，选择一台机器作为原始版本库，别的机器可以克隆这个原始版本库。每台机器上的版本库其实都是一样的，并没有主次之分。<br><strong>GitHub</strong>就是一个远程仓库。</p>
+<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><p>情景：你已经在本地创建了一个Git仓库后，又想在GitHub上创建一个仓库，并且这两个仓库远程同步，这样，github上的仓库既可以作为备份，又可以让其他人通过仓库来协作。</p>
+</blockquote>
+</li>
+<li><p>首先 ，登陆到github创建一个新仓库，名字为<code>demo</code>。</p>
+</li>
+<li>然后，在本地的<code>demo</code>仓库下运行：<code>git remote add origin Demons-wx/demo.git</code>。添加后，远程库的名字就是<code>origin</code>,这是git默认叫法，也可以改成别的。</li>
+<li>把本地库的所有内容推送到远程库上：使用<code>git push -u origin master</code>命令，把当前的分支<code>master</code>推送到远程。加上了<code>-u</code>参数，git不但会把本地的<code>master</code>分支内容推送到远程更新的<code>master</code>分支，还会把本地的<code>master</code>分支和远程<code>master</code>分支关联起来。</li>
+<li>从现在起，只要本地做了提交，就可以通过命令：<code>git push origin master</code>把本地<code>master</code>分支的最新修改推送至GitHub。<h3 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h3>要克隆一个仓库，首先必须要知道仓库的地址，然后使用<code>git clone</code>命令克隆。<br>git支持多种协议，包括<code>https</code>,但通过<code>ssh</code>支持原生<code>git</code>协议速度最快。<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><blockquote>
+<p>分支概念：在版本回退里，已经知道，每次提交，Git都会把他们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫做主分支，即<code>master</code>分支，<code>HEAD</code>严格意义上不是指向提交，而是指向<code>master</code>，<code>master</code>才指向提交，所以<code>HEAD</code>指向的就是当前分支。</p>
+<h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a>创建与合并分支</h3></blockquote>
+</li>
+<li>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点。</li>
+<li>每次提交，<code>master</code>分支都会向前移动一步，这样随着不断提交，<code>master</code>分支也越来越长。</li>
+<li>当创建新的分支的时候，例如<code>dev</code>,Git创建了一个指针叫做<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上。</li>
+<li>Git创建一个分支很快，因为除了增加了一个<code>dev</code>指针，改了<code>HEAD</code>指向，工作区没有任何变化</li>
+<li>从现在开始，对工作区的修改和提交就是针对dev分支了，比如一次新的提交，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变。</li>
+<li>假如<code>dev</code>的工作完成了，就可以把<code>dev</code>合并到<code>master</code>上。</li>
+<li>合并完成后，就可以删除<code>dev</code>分支了。</li>
+</ul>
+<p><strong>Git鼓励大量使用分支：</strong></p>
+<ul>
+<li>查看分支：<code>git branch</code></li>
+<li>创建分支：<code>git branch &lt;name&gt;</code></li>
+<li>切换分支：<code>git checkout &lt;name&gt;</code></li>
+<li>创建+切换分支：<code>git checkout -b &lt;name&gt;</code></li>
+<li>合并某分支到当前分支：<code>git merge &lt;name&gt;</code></li>
+<li>删除分支：<code>git branch -d &lt;name&gt;</code></li>
+</ul>
+<h3 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h3><p>当Git无法自动合并分支的时候，就必须先解决冲突，解决冲突后，再提交，合并完成。<br>使用<code>git log --graph</code>命令，可以看到分支合并图。</p>
+<h3 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h3><blockquote>
+<p>在实际开发中，我们应该按照几个基本原则进行分支管理：</p>
+<ul>
+<li>首先：<code>master</code>分支应该是非常稳定的，也就是仅用来发布新版本，平时不在上面干活；</li>
+<li>干活都在<code>dev</code>分支上，也就是说<code>dev</code>分支是不稳定的，到某个时候，比如发布新版本，再把<code>dev</code>分支合并到<code>master</code>上，在<code>master</code>分支发布1.0版本；</li>
+<li>团队里的每个人都在<code>dev</code>分支上干活，每个人都有自己的分支，时不时的往<code>dev</code>分支上合并就行了。</li>
+</ul>
+</blockquote>
+<p>合并分支时，加上 <code>--no -ff</code> 参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而<code>fast forward</code>合并就看不出来曾经做过合并。</p>
+<p>###bug分支</p>
+<ul>
+<li>如果手头有正在进行的工作而且不想提交，使用命令<code>git stash</code>，可以把当前工作现场保存下来；</li>
+<li>然后创建bug分支，比如<code>git checkout -b issue-01</code>；</li>
+<li>修复完成后，切换到<code>master</code>分支，并删除<code>issue-01</code>分支；</li>
+<li>使用命令<code>git stash list</code>查看之前保存的工作现场；</li>
+<li>使用命令<code>git stash pop</code>恢复工作现场的同时把stash内容也删除；</li>
+<li><p>再次使用<code>git stash list</code>就看不到任何stash的内容了。</p>
+<h3 id="feature分支"><a href="#feature分支" class="headerlink" title="feature分支"></a>feature分支</h3><p>开发一个新的feature，最好新建一个分支；<br>如果要丢弃了一个没有被合并过的分支，可以通过<code>git branch -D &lt;name&gt;</code>强行删除。</p>
+<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><blockquote>
+<p>多人协作的工作模式通常是这样的：</p>
+<ul>
+<li>首先，可以试图用<code>git push origin branch-name</code>推送自己的修改；</li>
+<li>如果推送失败，则因为远程分支比你本地的更新，需要用<code>git pull</code>试图合并；</li>
+<li>如果合并有冲突，先解决冲突，并在本地提交；</li>
+<li>没有冲突或解决掉冲突后，再用<code>git push origin branch-name</code>推送就能成功。</li>
+</ul>
+<p>如果<code>git pull</code>提示<code>no tracking information</code>，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream branch-name origin/branch-name</code>。<br>这就是多人协作的工作模式，一旦熟悉了，就非常简单。</p>
+</blockquote>
+</li>
+<li><p>查看远程库信息，使用<code>git remote -v</code>；</p>
+</li>
+<li>本地新建的分支如果不推送到远程，对其他人就是不可见的；</li>
+<li>从本地推送分支，使用<code>git push origin branch-name</code>，如果推送失败，先<code>git pull</code>抓取远程的新提交；</li>
+<li>在本地创建远程分支对应的分支，使用<code>git checkout -b branch-name origin/branch-name</code>，本地和远程分支的名称最好是一致的；</li>
+<li>建立本地分支和远程分支的关联，使用<code>git branch --set-upstream branch-name origin/branch-name</code>；</li>
+<li>从远程抓取分支，使用<code>git pull</code>，如果有冲突，先处理冲突。<h2 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h2><strong>tag和commit：</strong><blockquote>
+<p> “请把上周一的那个版本打包发布，commit号是6a5819e…”<br>“一串乱七八糟的数字不好找！”<br>如果换一个办法：<br>“请把上周一的那个版本打包发布，版本号是v1.2”<br>“好的，按照tag v1.2查找commit就行！”<br>所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。</p>
+<h3 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h3></blockquote>
+</li>
+<li>命令<code>git tag &lt;name&gt;</code>用于新建一个标签，默认为<code>HEAD</code>，也可以指定一个commit id；</li>
+<li><code>git tag -a &lt;tagname&gt; -m &quot;blabla...&quot;</code>可以指定标签信息；</li>
+<li><code>git tag -s &lt;tagname&gt; -m &quot;blabla...&quot;</code>可以用PGP签名标签；</li>
+<li>命令<code>git tag</code>可以查看所有标签。<h3 id="操作标签"><a href="#操作标签" class="headerlink" title="操作标签"></a>操作标签</h3></li>
+<li>命令<code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签；</li>
+<li>命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；</li>
+<li>命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；</li>
+<li>命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。<h2 id="使用github"><a href="#使用github" class="headerlink" title="使用github"></a>使用github</h2></li>
+<li>在GitHub上，可以fork任意开源仓库；</li>
+<li>自己拥有Fork后的仓库的读写权限；</li>
+<li>可以推送pull request给官方仓库来贡献代码。</li>
+</ul>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/25/git入门/" class="archive-article-date">
+  	<time datetime="2016-10-25T09:36:33.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-25</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/25/java反射知识/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java反射知识</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="git入门" data-title="git入门" data-url="//litten.me/2016/10/25/git入门/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wangxuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 王瑄
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">wangxuan，一个无知的人。</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
