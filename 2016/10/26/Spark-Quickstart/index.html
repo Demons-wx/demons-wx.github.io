@@ -6,30 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//litten.me">
-  <title>Spark Quickstart | 王瑄的博客</title>
+  <title>Spark Quickstart--翻译自Spark官网 | 王瑄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[toc]
-Basic
+  <meta name="description" content="Basic
 RDDs have actions, which return values, and transformations, which return pointers to new RDDs.RDDs的action返回的是一个值，transformations返回的是一个指向新的RDD的指针；
 
-action的示例：1234scala&amp;gt; textFile.count()">
+action的示例：1234scala&amp;gt; textFile.count() // Nu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark Quickstart">
+<meta property="og:title" content="Spark Quickstart--翻译自Spark官网">
 <meta property="og:url" content="//litten.me/2016/10/26/Spark-Quickstart/index.html">
 <meta property="og:site_name" content="王瑄的博客">
-<meta property="og:description" content="[toc]
-Basic
+<meta property="og:description" content="Basic
 RDDs have actions, which return values, and transformations, which return pointers to new RDDs.RDDs的action返回的是一个值，transformations返回的是一个指向新的RDD的指针；
 
-action的示例：1234scala&amp;gt; textFile.count()">
-<meta property="og:updated_time" content="2016-10-26T13:19:56.151Z">
+action的示例：1234scala&amp;gt; textFile.count() // Nu">
+<meta property="og:updated_time" content="2016-10-26T13:25:43.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark Quickstart">
-<meta name="twitter:description" content="[toc]
-Basic
+<meta name="twitter:title" content="Spark Quickstart--翻译自Spark官网">
+<meta name="twitter:description" content="Basic
 RDDs have actions, which return values, and transformations, which return pointers to new RDDs.RDDs的action返回的是一个值，transformations返回的是一个指向新的RDD的指针；
 
-action的示例：1234scala&amp;gt; textFile.count()">
+action的示例：1234scala&amp;gt; textFile.count() // Nu">
   
     <link rel="alternative" href="/atom.xml" title="王瑄的博客" type="application/atom+xml">
   
@@ -152,7 +149,7 @@ action的示例：1234scala&amp;gt; textFile.count()">
         
   
     <h1 class="article-title" itemprop="name">
-      Spark Quickstart
+      Spark Quickstart--翻译自Spark官网
     </h1>
   
 
@@ -160,13 +157,13 @@ action的示例：1234scala&amp;gt; textFile.count()">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[toc]</p>
-<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><blockquote>
+        <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><blockquote>
 <p>RDDs have actions, which return values, and transformations, which return pointers to new RDDs.<br>RDDs的action返回的是一个值，transformations返回的是一个指向新的RDD的指针；</p>
 </blockquote>
 <p><code>action</code>的示例：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scala&gt; textFile.count() <span class="comment">// Number of items in this RDD</span></div><div class="line">res0: <span class="type">Long</span> = <span class="number">126</span></div><div class="line">scala&gt; textFile.first() <span class="comment">// First item in this RDD</span></div><div class="line">res1: <span class="type">String</span> = # <span class="type">Apache</span> <span class="type">Spark</span></div></pre></td></tr></table></figure></p>
 <p>现在使用<code>transformation</code>，我们使用<code>filter</code>返回一个新的RDD：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scala&gt; <span class="keyword">val</span> linesWithSpark = textFile.filter(line =&gt; line.contains(<span class="string">"Spark"</span>))</div><div class="line">linesWithSpark: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = <span class="type">MapPartitionsRDD</span>[<span class="number">2</span>] at filter at &lt;console&gt;:<span class="number">27</span></div></pre></td></tr></table></figure></p>
 <p>我们可以将<code>action</code>和<code>transformation</code>放在一起用：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scala&gt; textFile.filter(line =&gt; line.contains(<span class="string">"Spark"</span>)).count() <span class="comment">// How many lines contain "Spark"?</span></div><div class="line">res3: <span class="type">Long</span> = <span class="number">15</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h2 id="更多的RDD操作"><a href="#更多的RDD操作" class="headerlink" title="更多的RDD操作"></a>更多的RDD操作</h2><p>假设我们要找到最长的一行：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scala&gt; textFile.map(line =&gt; line.split(<span class="string">" "</span>).size).reduce((a, b) =&gt; <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b)</div><div class="line">res4: <span class="type">Long</span> = <span class="number">15</span></div></pre></td></tr></table></figure></p>
 <p>首先，将一行映射为一个整数值，创建一个新的RDD。Reduce调用RDD找到最大的一行，我们可以使用<code>Math.max()</code>，让代码更容易理解：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scala&gt; <span class="keyword">import</span> java.lang.<span class="type">Math</span></div><div class="line"><span class="keyword">import</span> java.lang.<span class="type">Math</span></div><div class="line"></div><div class="line">scala&gt; textFile.map(line =&gt; line.split(<span class="string">" "</span>).size).reduce((a, b) =&gt; <span class="type">Math</span>.max(a, b))</div><div class="line">res5: <span class="type">Int</span> = <span class="number">15</span></div></pre></td></tr></table></figure></p>
 <p>一种常见的数据流模式是MapReduce，由Hadoop推广。 Spark可以轻松实现MapReduce流程：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scala&gt; <span class="keyword">val</span> wordCounts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>)).map(word =&gt; (word, <span class="number">1</span>)).reduceByKey((a, b) =&gt; a + b)</div><div class="line">wordCounts: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">ShuffledRDD</span>[<span class="number">8</span>] at reduceByKey at &lt;console&gt;:<span class="number">28</span></div></pre></td></tr></table></figure></p>
@@ -196,7 +193,7 @@ action的示例：1234scala&amp;gt; textFile.count()">
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark/">spark</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark-大数据/">spark,大数据</a></li></ul>
 	</div>
 
       
@@ -245,7 +242,7 @@ action的示例：1234scala&amp;gt; textFile.count()">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Spark-Quickstart" data-title="Spark Quickstart" data-url="//litten.me/2016/10/26/Spark-Quickstart/"></div>
+	<div class="ds-thread" data-thread-key="Spark-Quickstart" data-title="Spark Quickstart--翻译自Spark官网" data-url="//litten.me/2016/10/26/Spark-Quickstart/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -322,7 +319,7 @@ action的示例：1234scala&amp;gt; textFile.count()">
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
+    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/spark-大数据/" style="font-size: 10px;">spark,大数据</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a>
     			</div>
     	</section>
     
