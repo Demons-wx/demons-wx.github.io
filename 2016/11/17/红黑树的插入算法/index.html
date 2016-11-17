@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//litten.me">
+  <title>红黑树的插入算法 | 王瑄的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本节中，我们稍稍放松完美平衡的要求并学习一种能够保证符号表API中所有操作(范围查找除外)均能在对数时间内完成的数据结构。
+
+2-3查找树
+定义：一颗2-3查找树或为一颗空树，或由以下结点组成：
+
+2-结点，含有一个键(及其对应的值)和两条链接，左链接指向的2-3树中的键都小于该结点，右链接指向的2-3树种的键都大于该结点。
+3-结点，含有两个键(及其对应的值)和三条链接，左链接指向的2-3树种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树的插入算法">
+<meta property="og:url" content="//litten.me/2016/11/17/红黑树的插入算法/index.html">
+<meta property="og:site_name" content="王瑄的博客">
+<meta property="og:description" content="本节中，我们稍稍放松完美平衡的要求并学习一种能够保证符号表API中所有操作(范围查找除外)均能在对数时间内完成的数据结构。
+
+2-3查找树
+定义：一颗2-3查找树或为一颗空树，或由以下结点组成：
+
+2-结点，含有一个键(及其对应的值)和两条链接，左链接指向的2-3树中的键都小于该结点，右链接指向的2-3树种的键都大于该结点。
+3-结点，含有两个键(及其对应的值)和三条链接，左链接指向的2-3树种">
+<meta property="og:updated_time" content="2016-11-17T13:24:42.462Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="红黑树的插入算法">
+<meta name="twitter:description" content="本节中，我们稍稍放松完美平衡的要求并学习一种能够保证符号表API中所有操作(范围查找除外)均能在对数时间内完成的数据结构。
+
+2-3查找树
+定义：一颗2-3查找树或为一颗空树，或由以下结点组成：
+
+2-结点，含有一个键(及其对应的值)和两条链接，左链接指向的2-3树中的键都小于该结点，右链接指向的2-3树种的键都大于该结点。
+3-结点，含有两个键(及其对应的值)和三条链接，左链接指向的2-3树种">
+  
+    <link rel="alternative" href="/atom.xml" title="王瑄的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/wx.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Demons</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">朝九晚五，浪迹天涯。</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/5869423338" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/wangxuan" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">Demons</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/wx.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Demons</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">朝九晚五，浪迹天涯。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/5869423338" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/wangxuan" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-红黑树的插入算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      红黑树的插入算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本节中，我们稍稍放松完美平衡的要求并学习一种能够保证符号表API中所有操作(范围查找除外)均能在对数时间内完成的数据结构。</p>
+</blockquote>
+<h3 id="2-3查找树"><a href="#2-3查找树" class="headerlink" title="2-3查找树"></a>2-3查找树</h3><blockquote>
+<p>定义：一颗2-3查找树或为一颗空树，或由以下结点组成：</p>
+<ul>
+<li>2-结点，含有一个键(及其对应的值)和两条链接，左链接指向的2-3树中的键都小于该结点，右链接指向的2-3树种的键都大于该结点。</li>
+<li>3-结点，含有两个键(及其对应的值)和三条链接，左链接指向的2-3树种的键都小于该结点，中链接指向的2-3树中的键都位于该结点的两个键之间，右链接指向的2-3树中的键都大于该结点。</li>
+</ul>
+<p>和以前一样，我们将指向一颗空树的链接称为空链接。</p>
+</blockquote>
+<a id="more"></a>
+<p>一颗<em>完美平衡</em>的2-3查找树中的所有空链接到根结点的距离都应该是相同的。简洁起见，这里使用2-3树指代一颗完美平衡的2-3查找树。看看关于它的操作：</p>
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><p>要判断一个键是否在树中，我们先将它和根结点中的键比较。如果它和任意一个相等，查找命中；否则我们就根据比较的结果找到指向相应区间的链接，并在其指向的子树中递归的继续查找。如果这个是空链接，查找未命中。</p>
+<h4 id="向2-结点中插入新键"><a href="#向2-结点中插入新键" class="headerlink" title="向2-结点中插入新键"></a>向2-结点中插入新键</h4><p>我们可以和二叉查找树一样先进行一次未命中的查找，如果未命中的查找结束于一个2-结点，我么么只需要把这个2-结点替换为一个3-结点，将要插入的键保存在其中即可。</p>
+<h4 id="向一棵只含有一个3-结点的树中插入新键"><a href="#向一棵只含有一个3-结点的树中插入新键" class="headerlink" title="向一棵只含有一个3-结点的树中插入新键"></a>向一棵只含有一个3-结点的树中插入新键</h4><p>考虑一个特殊情况，向一棵只含有一个3-结点的树中插入新键。这棵树中有两个键，所以在它唯一的节点中已经没有可以插入新键的空间了。</p>
+<p>为了将新键插入，我们先临时的将新键存入该结点中，使之成为一个4-结点。它很自然的扩展了以前的结点并含有3个键和4条链接。</p>
+<p>创建一个4-结点很方便，因为很容易将它转换成为一棵由3个2-结点组成的2-3树，其中一个结点(根)含有中键，一个结点含有三个键中的最小者(和根结点的左链接相连)，一个结点含有3个键中最大者(和根结点的右链接相连)。</p>
+<p>插入前的高度为0，插入后树的高度为1。这个例子简单却很值得学习，它说明了2-3树是如何生长的。</p>
+<h4 id="向一个父结点为2-结点的3-结点中插入新键"><a href="#向一个父结点为2-结点的3-结点中插入新键" class="headerlink" title="向一个父结点为2-结点的3-结点中插入新键"></a>向一个父结点为2-结点的3-结点中插入新键</h4><p>假设未命中的查找结束于一个3-结点，而它的父结点是一个2-结点。</p>
+<p>我们先像刚才一样构造一个临时的4-结点并将其分解，<strong>但此时我们不会为中键创建一个新结点，而是将其移动至原来的父结点中。</strong></p>
+<p><strong>你可以将这次转换看成将指向原3-结点的一条链接替换成为新父结点中的原中键左右两边的两条链接，并分别指向两个新的2-结点。</strong></p>
+<p>另外，这次转换并不影响2-3树的主要性质。树仍然是有序的，因为中键被移动到父结点中去了，树仍然是完美平衡的，插入后所有的空链接到根结点的距离仍然相同。</p>
+<p>请确认你完全理解这次转换——它是2-3树动态变化的核心。</p>
+<h4 id="向一个父结点为3-结点的3-结点中插入新键"><a href="#向一个父结点为3-结点的3-结点中插入新键" class="headerlink" title="向一个父结点为3-结点的3-结点中插入新键"></a>向一个父结点为3-结点的3-结点中插入新键</h4><p>假设未命中的查找结束于一个父结点为3-结点的结点。我们再次和刚才一样构造一个临时的4-结点并分解它，然后将它的中键插入它的父结点中，但父结点也是一个3-结点，因此我们再用这个中键构造一个新的临时4-结点，然后在这个结点上进行<em>相同的变换</em>。</p>
+<p>推广到一般情况，我们就这样一直向上不断分解临时的4-结点并将中键插入更高层的父结点，直到遇到一个2-结点并将它替换为一个不需要继续分解的3-结点，或者是到达3-结点的根。</p>
+<h4 id="分解根节点"><a href="#分解根节点" class="headerlink" title="分解根节点"></a>分解根节点</h4><p>如果从插入结点到根节点的路径上全都是3-结点，我们的根结点最终变成一个临时的4-结点。</p>
+<p>此时，我们可以按照向一棵只有一个3-结点的树中插入新键的方法处理这个问题。我们将临时的4-结点分解为3个2-结点，<strong>使得树高加1。</strong></p>
+<h4 id="局部变换"><a href="#局部变换" class="headerlink" title="局部变换"></a>局部变换</h4><p>将一个4-结点分解为一棵2-3树可能有6种情况：</p>
+<ul>
+<li>这个4-结点可能是根节点；</li>
+<li>可能是一个2-结点的左子结点或者右子结点；</li>
+<li>也可能是一个3-结点的左子结点、中子结点或者右子结点。</li>
+</ul>
+<p>2-3树插入算法的根本在于这些变换都是局部的：除了相关结点和链接外不必修改或者检查树的其他部分。</p>
+<h4 id="全局性质"><a href="#全局性质" class="headerlink" title="全局性质"></a>全局性质</h4><p>这些局部变换不会影响树的全局有序性和平衡性：任意空链接到根结点的路径长度都是相等的。</p>
+<p>所有的变换都具有这个性质：如果在变换前根结点到所有空链接的路径长度为h，那么变换后该长度仍为h。<em>除非当根结点被分解为3个2-结点时，所有空链接到根结点的路径长度才会加1。</em></p>
+<p>和标准的二叉查找树由上向下生长不同，2-3树的生长是由下向上的。还记得在二叉查找树中，按照升序插入10个键会得到高度为9的一棵最差查找树吗？如果使用2-3树，树的高度是2。</p>
+<blockquote>
+<p>命题1：在一棵大小为N的2-3树种，查找和插入操作访问的结点必然不超过lgN个。</p>
+</blockquote>
+<p>我们可以确定2-3树在最坏的情况下仍有较好的性能。每个操作中处理每个结点的时间都不会超过一个很小的常数。且这两个操作都只会访问一条路径上的结点，所以任何查找或插入的成本都肯定不会超过对数级别。</p>
+<p><em>含有10亿个结点的一棵2-3树的高度仅在19到30之间。我们最多只需要访问30个键就能够在10亿个键中进行任意查找和插入操作，这是相当惊人的。</em></p>
+<h3 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h3><blockquote>
+<p>上述的2-3树的插入算法并不难理解，现在我们会看到它也不难实现。我们要学习一种名为红黑二叉查找树的简单数据结构来表达并实现它。</p>
+</blockquote>
+<p>红黑二叉查找树背后的基本思想是用标准的二叉查找树(完全由2-结点构成)和一些额外的信息(替换3-结点)来表示2-3树。</p>
+<h4 id="替换3-结点"><a href="#替换3-结点" class="headerlink" title="替换3-结点"></a>替换3-结点</h4><p>我们将树中的链接分为两种类型：</p>
+<ul>
+<li><strong>红链接</strong>将两个2-结点连接起来构成一个3-结点；</li>
+<li><strong>黑链接</strong>是2-3树中的普通链接。</li>
+</ul>
+<p>确切的说，我们将一个3-结点表示为由一条左斜的红链接相连的两个2-结点。(两个2-结点其中之一是另一个的左子结点)</p>
+<p>这种表示法的一个优点是，我们无需修改就可以直接使用标准二叉查找树的<code>get()</code>方法。</p>
+<h4 id="一种等价的定义"><a href="#一种等价的定义" class="headerlink" title="一种等价的定义"></a>一种等价的定义</h4><blockquote>
+<p>红黑树的另一种定义是含有红黑链接并满足下列条件的二叉查找树：</p>
+<ul>
+<li>红链接均为左链接；</li>
+<li>没有任何一个结点同时和两条红链接相连；</li>
+<li>该树是<em>完美黑色平衡</em>的，即任意空链接到根结点的路径上的黑链接数量相同。</li>
+</ul>
+<p>满足这样的定义的红黑树和相应的2-3树是一一对应的。</p>
+</blockquote>
+<h4 id="一一对应"><a href="#一一对应" class="headerlink" title="一一对应"></a>一一对应</h4><p>如果我们将一棵红黑树种的红链接画平，那么所有的空链接到根结点的距离将是相同的。<br>如果我们将由红链接相连的结点合并，得到的就是一棵2-3树。<br>相反：<br>如果将一棵2-3树中的3-结点画作由红色左链接相连的两个2-结点，那么不会存在能够和两条红链接相连的结点，且树必然是完美黑色平衡的。</p>
+<p>无论我们选择用何种方式去定义它们，红黑树都既是二叉查找树，也是2-3树。因此如果我们能够在保持一一对应关系的基础上实现2-3树的插入算法，那么我们就能够将两个算法的优点结合起来：二叉查找树中简洁高效的查找方法和2-3树种高效的平衡插入算法。</p>
+<h4 id="颜色表示"><a href="#颜色表示" class="headerlink" title="颜色表示"></a>颜色表示</h4><p>每个结点都只会有一条指向自己的链接(从它的父链接指向它)，我们将链接的颜色保存在表示结点的<code>Node</code>数据类型的布尔变量<code>color</code>中。</p>
+<p>如果指向它的链接是红色的，那么该变量为true，黑色则为false。我们约定空链接为黑色。<br>当我们提到一个结点的颜色时，我们指的是指向该结点的链接的颜色，反之亦然。</p>
+<h4 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h4><blockquote>
+<p>在我们实现的某些操作中，可能会出现红色右链接或者两条连续的红链接，但在操作完成之前这些情况都要被小心的旋转并修复。</p>
+</blockquote>
+<p>左旋转：一个子树的右链接是红色的，只要将根结点的键和右子结点的键中较大的键的结点作为根结点，就能实现一个红色的右链接转换为一个红色的左链接。<br>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node <span class="title">rotateLeft</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">	Node x = h.right;</div><div class="line">	h.right = x.left;</div><div class="line">	x.left = h;</div><div class="line">	x.color = h.color;</div><div class="line">	h.color = RED;</div><div class="line">	x.N = h.N;</div><div class="line">	h.N = <span class="number">1</span> + size(h.left) + size(h.right);</div><div class="line">	<span class="keyword">return</span> x;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>右旋转：将红色的左链接转换为一个红色的右链接。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function">Node <span class="title">rotateRight</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">	Node x = h.left;</div><div class="line">	h.left = x.right;</div><div class="line">	x.right = h;</div><div class="line">	x.color = h.color;</div><div class="line">	h.color = RED;</div><div class="line">	x.N = h.N;</div><div class="line">	h.N = <span class="number">1</span> + size(h.left) + size(h.right);</div><div class="line">	<span class="keyword">return</span> x;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="在旋转后重置父结点的链接"><a href="#在旋转后重置父结点的链接" class="headerlink" title="在旋转后重置父结点的链接"></a>在旋转后重置父结点的链接</h4><p>无论是左旋转还是右旋转，旋转操作都会返回一条链接。我们需要用这个返回值重置父结点中相应的链接。这可能会产生两条连续的红链接。但我们的算法会继续使用<code>旋转操作</code>修正这种情况。</p>
+<h4 id="向单个2-结点中插入新键"><a href="#向单个2-结点中插入新键" class="headerlink" title="向单个2-结点中插入新键"></a>向单个2-结点中插入新键</h4><p>如果新键小于老键：我们只需要新增一个红色结点即可，新的红黑树和单个3-结点完全等价。<br>如果新键大于老键：新增的红色结点将会产生一条红色右链接。我们需要使用<code>root = rotateLeft(root);</code>来将其旋转为红色左链接并修正根结点的链接。</p>
+<h4 id="向树底部的2-结点插入新键"><a href="#向树底部的2-结点插入新键" class="headerlink" title="向树底部的2-结点插入新键"></a>向树底部的2-结点插入新键</h4><p>用和二叉查找树相同的方式向一棵红黑树中插入一个新键会在树的底部新增一个结点，但总是用红链接将新结点和它的父结点相连。由于它的父结点是一个2-结点，如果指向新结点是父结点的左链接，那么父结点直接成为一个3-结点；如果指向新结点是父结点的右链接，这就是一个错误的3-结点，需要一次左旋转修正它。</p>
+<h4 id="向一棵双键树-即一个3-结点-中插入新键"><a href="#向一棵双键树-即一个3-结点-中插入新键" class="headerlink" title="向一棵双键树(即一个3-结点)中插入新键"></a>向一棵双键树(即一个3-结点)中插入新键</h4><p>可以分为三种情况，每种情况都会产生一个同时连接到两条红链接的结点，而我们的目的就是修正这一点。</p>
+<ol>
+<li>新键大于原树中的两个键，这是最简单的情况。因为它被连接到3-结点的右链接。此时树是平衡的，根结点是中间大小的键，它的两条红链接分别和较小和较大的结点相连。如果我们将两条链接的颜色由红变黑，那么我们就得到了一棵由三个结点组成、高为2的平衡树。</li>
+<li>如果新键小于原树中的两个键，它会被连接到最左边的空链接，这样就产生了两条连续的红链接，此时我们需要将上层的红链接右旋转即可得到第一种情况。</li>
+<li>如果新键介于原树中两个键之间，这又会产生两条连续的红链接，一个红色左链接接一条红色右链接，此时我们只需要将下层红链接左旋转即可得到第二种情况。</li>
+</ol>
+<h4 id="颜色转换"><a href="#颜色转换" class="headerlink" title="颜色转换"></a>颜色转换</h4><p>专门用一个方法<code>flipColors()</code>来转换一个结点的两个红色子结点。除了将子结点的颜色由红变黑之外，同时还要将父结点的颜色由黑变红。<br>这项操作最重要的性质在于它和旋转操作一样是局部变换，不会影响<strong>整棵树的黑色平衡性</strong>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">flipColors</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">	h.color = RED;</div><div class="line">	h.left.color = BLACK;</div><div class="line">	h.right.color = BLACK;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="根结点总是黑色"><a href="#根结点总是黑色" class="headerlink" title="根结点总是黑色"></a>根结点总是黑色</h4><p>我们在每次插入后都会将根结点设为黑色。注意：每当根结点由红变黑时树的黑链接高度就会加1。</p>
+<h4 id="向树底部的3-结点插入新键"><a href="#向树底部的3-结点插入新键" class="headerlink" title="向树底部的3-结点插入新键"></a>向树底部的3-结点插入新键</h4><p>假设我们需要在树的底部的一个3-结点下加入一个新结点。前面讨论的三种情况都会出现。<strong>颜色转换会使到中结点的链接变红，相当于将它送入了父结点。</strong>这意味着在父结点中继续插入一个新键。我们也会继续用相同的办法解决这个问题。</p>
+<h4 id="将红链接在树中向上传递"><a href="#将红链接在树中向上传递" class="headerlink" title="将红链接在树中向上传递"></a>将红链接在树中向上传递</h4><p>在沿着插入点到根结点的路径向上移动时所经过的每个结点中顺序完成以下操作，我们就能完成插入操作：</p>
+<ol>
+<li>如果右子结点是红色的而左子结点是黑色的，进行左旋转；</li>
+<li>如果左子结点是红色的且它的左子结点也是红色的，进行右旋转；</li>
+<li>如果左右子结点均为红色，进行颜色转换。<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> searching.symboltables;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 红黑树的插入算法</div><div class="line"> * <span class="doctag">@author</span> wx</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> &lt;Key&gt;</div><div class="line"> * <span class="doctag">@param</span> &lt;Value&gt;</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedBlackBST</span>&lt;<span class="title">Key</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">Key</span>&gt;, <span class="title">Value</span>&gt; </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> Node root;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> RED = <span class="keyword">true</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> BLACK = <span class="keyword">false</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">		Key key;	<span class="comment">// 键</span></div><div class="line">		Value val; 	<span class="comment">// 相关联的值</span></div><div class="line">		Node left, right;	<span class="comment">// 左右子树</span></div><div class="line">		<span class="keyword">int</span> N;	<span class="comment">// 这棵树中结点总数</span></div><div class="line">		<span class="keyword">boolean</span> color;	<span class="comment">// 由其父结点指向它的链接的颜色</span></div><div class="line">		</div><div class="line">		Node(Key key, Value val, <span class="keyword">int</span> N, <span class="keyword">boolean</span> color)&#123;</div><div class="line">			<span class="keyword">this</span>.key = key;</div><div class="line">			<span class="keyword">this</span>.val = val;</div><div class="line">			<span class="keyword">this</span>.N = N;</div><div class="line">			<span class="keyword">this</span>.color = color;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isRed</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">return</span> h.color == RED;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> Node <span class="title">rotateLeft</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">		Node x = h.right;</div><div class="line">		h.right = x.left;</div><div class="line">		x.color = h.color;</div><div class="line">		h.color = RED;</div><div class="line">		x.N = h.N;</div><div class="line">		h.N = <span class="number">1</span> + size(h.left) + size(h.right);</div><div class="line">		<span class="keyword">return</span> x;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> Node <span class="title">rotateRight</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">		Node x = h.left;</div><div class="line">		h.left = x.right;</div><div class="line">		x.right = h;</div><div class="line">		x.color = h.color;</div><div class="line">		h.color = RED;</div><div class="line">		x.N = h.N;</div><div class="line">		h.N = <span class="number">1</span> + size(h.left) + size(h.right);</div><div class="line">		<span class="keyword">return</span> x;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">flipColor</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">		h.color = RED;</div><div class="line">		h.left.color = BLACK;</div><div class="line">		h.right.color = BLACK;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">(Node h)</span></span>&#123;</div><div class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125; <span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">return</span> h.N;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 查找key，找到则更新其值，否则为它新键一个结点</div><div class="line">	 * <span class="doctag">@param</span> key</div><div class="line">	 * <span class="doctag">@param</span> val</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(Key key, Value val)</span></span>&#123;</div><div class="line">		root = put(root, key, val);</div><div class="line">		root.color = BLACK;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">private</span> Node <span class="title">put</span><span class="params">(Node h, Key key, Value val)</span></span>&#123;</div><div class="line">		<span class="comment">// 标准的插入操作，和父结点用红链接相连</span></div><div class="line">		<span class="keyword">if</span>(h == <span class="keyword">null</span>)&#123;	</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> Node(key, val, <span class="number">1</span>, RED);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="keyword">int</span> cmp = key.compareTo(h.key);</div><div class="line">		<span class="keyword">if</span>(cmp &lt; <span class="number">0</span>)&#123;</div><div class="line">			h.left = put(h.left, key, val);</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(cmp &gt; <span class="number">0</span>)&#123;</div><div class="line">			h.right = put(h.right, key, val);</div><div class="line">		&#125; <span class="keyword">else</span>&#123;</div><div class="line">			h.val = val;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="comment">// 将含有红色右链接的3-结点(或临时4-结点)左旋转</span></div><div class="line">		<span class="keyword">if</span>(isRed(h.left) &amp;&amp; !isRed(h.right))&#123;</div><div class="line">			h = rotateLeft(h);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 将临时的4-结点中两条连续红链接中上层链接右旋转</span></div><div class="line">		<span class="keyword">if</span>(isRed(h.left) &amp;&amp; isRed(h.left.left))&#123;</div><div class="line">			h = rotateRight(h);</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 进行颜色转换并将红链接在树中向上传递</span></div><div class="line">		<span class="keyword">if</span>(isRed(h.left) &amp;&amp; isRed(h.right))&#123;</div><div class="line">			flipColor(h);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		h.N = size(h.left) + size(h.right) + <span class="number">1</span>;</div><div class="line">		<span class="keyword">return</span> h;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/17/红黑树的插入算法/" class="archive-article-date">
+  	<time datetime="2016-11-17T13:21:33.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-17</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/09/排序算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">排序算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="红黑树的插入算法" data-title="红黑树的插入算法" data-url="//litten.me/2016/11/17/红黑树的插入算法/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wangxuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Demons
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/查找/" style="font-size: 10px;">查找</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">wangxuan，一个无知的人。</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
