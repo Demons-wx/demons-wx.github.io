@@ -8,63 +8,30 @@
   <link rel="dns-prefetch" href="//litten.me">
   <title>Java Socket | 王瑄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="网络基础知识
-TCP/IP协议
-
+  <meta name="description" content="网络基础知识TCP/IP协议
 TCP/IP是目前世界上应用最为广泛的协议。是以TCP和IP为基础的不同层次上多个协议的集合。
 
- TCP：Transmission Control Protocol   传输控制协议 IP：Internet Protocol   互联网协议
-
-TCP/IP模型
-
-端口
-
-
-
-用于区分不同的应用
-端口号范围0 - 65535，其中0 - 1023为系统所保留
-IP">
+TCP：Transmission Control Protocol   传输控制协议
+IP：Internet Protocol   互联网协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Socket">
 <meta property="og:url" content="//litten.me/2016/11/29/Java-Socket/index.html">
 <meta property="og:site_name" content="王瑄的博客">
-<meta property="og:description" content="网络基础知识
-TCP/IP协议
-
+<meta property="og:description" content="网络基础知识TCP/IP协议
 TCP/IP是目前世界上应用最为广泛的协议。是以TCP和IP为基础的不同层次上多个协议的集合。
 
- TCP：Transmission Control Protocol   传输控制协议 IP：Internet Protocol   互联网协议
-
-TCP/IP模型
-
-端口
-
-
-
-用于区分不同的应用
-端口号范围0 - 65535，其中0 - 1023为系统所保留
-IP">
+TCP：Transmission Control Protocol   传输控制协议
+IP：Internet Protocol   互联网协议">
 <meta property="og:image" content="//litten.me/\assets\img\tcpip模型.png">
 <meta property="og:image" content="//litten.me/\assets\img\Socket通信模型.png">
-<meta property="og:updated_time" content="2016-11-29T15:36:49.826Z">
+<meta property="og:updated_time" content="2016-11-29T15:41:11.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Socket">
-<meta name="twitter:description" content="网络基础知识
-TCP/IP协议
-
+<meta name="twitter:description" content="网络基础知识TCP/IP协议
 TCP/IP是目前世界上应用最为广泛的协议。是以TCP和IP为基础的不同层次上多个协议的集合。
 
- TCP：Transmission Control Protocol   传输控制协议 IP：Internet Protocol   互联网协议
-
-TCP/IP模型
-
-端口
-
-
-
-用于区分不同的应用
-端口号范围0 - 65535，其中0 - 1023为系统所保留
-IP">
+TCP：Transmission Control Protocol   传输控制协议
+IP：Internet Protocol   互联网协议">
 <meta name="twitter:image" content="//litten.me/\assets\img\tcpip模型.png">
   
     <link rel="alternative" href="/atom.xml" title="王瑄的博客" type="application/atom+xml">
@@ -196,27 +163,20 @@ IP">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="网络基础知识"><a href="#网络基础知识" class="headerlink" title="网络基础知识"></a>网络基础知识</h4><ol>
-<li><p>TCP/IP协议</p>
-<blockquote>
+        <h4 id="网络基础知识"><a href="#网络基础知识" class="headerlink" title="网络基础知识"></a>网络基础知识</h4><h5 id="TCP-IP协议"><a href="#TCP-IP协议" class="headerlink" title="TCP/IP协议"></a>TCP/IP协议</h5><blockquote>
 <p>TCP/IP是目前世界上应用最为广泛的协议。是以TCP和IP为基础的不同层次上多个协议的集合。</p>
 </blockquote>
-<p> TCP：Transmission Control Protocol   传输控制协议<br> IP：Internet Protocol   互联网协议</p>
-</li>
-<li><p>TCP/IP模型<br><img src="\assets\img\tcpip模型.png" alt="tcp/ip模型"></p>
-</li>
-<li><p>端口</p>
-</li>
-</ol>
-<ul>
+<pre><code>TCP：Transmission Control Protocol   传输控制协议
+IP：Internet Protocol   互联网协议
+</code></pre><a id="more"></a>
+<h5 id="TCP-IP模型"><a href="#TCP-IP模型" class="headerlink" title="TCP/IP模型"></a>TCP/IP模型</h5><p><img src="\assets\img\tcpip模型.png" alt="tcp/ip模型"></p>
+<h5 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h5><ul>
 <li>用于区分不同的应用</li>
 <li>端口号范围0 - 65535，其中0 - 1023为系统所保留</li>
 <li>IP地址和端口号组成了所谓的Socket，Socket是网络上运行的程序之间双向通信链路的终结点，是TCP和UDP的基础。</li>
 <li>http：80 ftp：21 telnet：23</li>
 </ul>
-<ol>
-<li>Java中的网络的支持<br>针对网络通信的不同层次，Java提供了网络功能有四大类：</li>
-</ol>
+<h5 id="Java中的网络的支持"><a href="#Java中的网络的支持" class="headerlink" title="Java中的网络的支持"></a>Java中的网络的支持</h5><p>针对网络通信的不同层次，Java提供了网络功能有四大类：</p>
 <ul>
 <li>InetAddress：用于标识网络上的硬件资源；</li>
 <li>URL：统一资源定位符，通过URL可以直接读取或写入网络上的数据；</li>
