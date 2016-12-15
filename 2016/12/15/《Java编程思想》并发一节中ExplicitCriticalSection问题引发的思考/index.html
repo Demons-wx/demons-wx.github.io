@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="//litten.me">
+  <title>《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考 | 王瑄的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果你正在写一个变量，它可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，那么你必须使用同步，并且，读写线程都必须用相同的监视器锁同步。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考">
+<meta property="og:url" content="//litten.me/2016/12/15/《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考/index.html">
+<meta property="og:site_name" content="王瑄的博客">
+<meta property="og:description" content="如果你正在写一个变量，它可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，那么你必须使用同步，并且，读写线程都必须用相同的监视器锁同步。">
+<meta property="og:image" content="//litten.me/\assets\img\PairManager.png">
+<meta property="og:updated_time" content="2016-12-15T07:47:07.195Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考">
+<meta name="twitter:description" content="如果你正在写一个变量，它可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，那么你必须使用同步，并且，读写线程都必须用相同的监视器锁同步。">
+<meta name="twitter:image" content="//litten.me/\assets\img\PairManager.png">
+  
+    <link rel="alternative" href="/atom.xml" title="王瑄的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/wx.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Demons</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">朝九晚五，浪迹天涯。</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/5869423338" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/wangxuan" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">Demons</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/wx.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Demons</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">朝九晚五，浪迹天涯。</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Demons-wx" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/5869423338" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/wangxuan" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>如果你正在写一个变量，它可能接下来将被另一个线程读取，或者正在读取一个上一次已经被另一个线程写过的变量，那么你必须使用同步，并且，读写线程都必须用相同的监视器锁同步。    </p>
+</blockquote>
+<a id="more"></a>
+<h4 id="PairManager的四种子类"><a href="#PairManager的四种子类" class="headerlink" title="PairManager的四种子类"></a>PairManager的四种子类</h4><p>PairManager：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">PairManager</span> </span>&#123;</div><div class="line">	AtomicInteger checkCounter = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</div><div class="line">	<span class="keyword">protected</span> Pair p = <span class="keyword">new</span> Pair();</div><div class="line">	<span class="keyword">private</span> List&lt;Pair&gt; storage = Collections.synchronizedList(<span class="keyword">new</span> ArrayList&lt;Pair&gt;());</div><div class="line">	<span class="comment">// Make a copy to keep the original safe;</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Pair <span class="title">getPair</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Pair(p.getX(), p.getY());</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// Assume this is a time consuming operation</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">store</span><span class="params">(Pair p)</span> </span>&#123;</div><div class="line">		storage.add(p);</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			TimeUnit.MILLISECONDS.sleep(<span class="number">50</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (InterruptedException ignore) &#123;&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PairManager1(Synchronized the entire method)：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PairManager1</span> <span class="keyword">extends</span> <span class="title">PairManager</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">		p.incrementX();</div><div class="line">		p.incrementY();</div><div class="line">		store(getPair());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PairManager2(use a critical section)：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PairManager2</span> <span class="keyword">extends</span> <span class="title">PairManager</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">		Pair temp;</div><div class="line">		<span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</div><div class="line">			p.incrementX();</div><div class="line">			p.incrementY();</div><div class="line">			temp = getPair();</div><div class="line">		&#125;</div><div class="line">		store(temp);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ExplicitPairManager1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExplicitPairManager1</span> <span class="keyword">extends</span> <span class="title">PairManager</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">		lock.lock();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			p.incrementX();</div><div class="line">			p.incrementY();</div><div class="line">			store(getPair());</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			lock.unlock();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ExplicitPairManager2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExplicitPairManager2</span> <span class="keyword">extends</span> <span class="title">PairManager</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</div><div class="line">		Pair temp;</div><div class="line">		lock.lock();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			p.incrementX();</div><div class="line">			p.incrementY();</div><div class="line">			temp = getPair();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			lock.unlock();</div><div class="line">		&#125;</div><div class="line">		store(temp);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="错误信息："><a href="#错误信息：" class="headerlink" title="错误信息："></a>错误信息：</h4><p><img src="\assets\img\PairManager.png" alt="PairManager"></p>
+<h4 id="对于ExplicitPairManager2的increment-方法线程出错的看法："><a href="#对于ExplicitPairManager2的increment-方法线程出错的看法：" class="headerlink" title="对于ExplicitPairManager2的increment()方法线程出错的看法："></a>对于ExplicitPairManager2的increment()方法线程出错的看法：</h4><ol>
+<li>ExplicitPairManager1，PairManager1，PairManager2中的increment()方法都被synchronized关键字标记；</li>
+<li>在本例中，无论是同步方法还是同步控制块，锁的都是PairManager的对象；</li>
+<li>由synchronized概念可知：要控制对共享资源的访问，得先把它包装进一个对象。然后把所有要访问这个资源的方法标记为synchronized。如果某个任务处于一个对标记为synchronized的方法的调用中，那么这个线程从该方法返回之前，其他所有要调用类中任何标记为synchronized的方法的线程都会被阻塞。</li>
+<li>所以线程在进行ExplicitPairManager2中的increment()方法时，并不会影响PairManager中的另一个synchronized方法getPair()获得锁，因此，getPair().checkState()方法可能读取到共享资源p.x和p.y非同步状态的值。</li>
+</ol>
+<h4 id="一定要明确的"><a href="#一定要明确的" class="headerlink" title="一定要明确的"></a>一定要明确的</h4><blockquote>
+<p>如果多个方法操作同一资源，请给所有方法加锁，并且要是同一个锁。</p>
+</blockquote>
+<p>此例中，主要问题就是Lock和Synchronized不是同一个锁，对共享资源的访问并不互斥。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/15/《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考/" class="archive-article-date">
+  	<time datetime="2016-12-15T07:41:11.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-15</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/29/Java-Socket/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java Socket</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考" data-title="《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考" data-url="//litten.me/2016/12/15/《Java编程思想》并发一节中ExplicitCriticalSection问题引发的思考/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wangxuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Demons
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/并发/" style="font-size: 10px;">并发</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/查找/" style="font-size: 10px;">查找</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">wangxuan，一个无知的人。</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//litten.me">
-  <title>Tag: GitHub | 王瑄的博客</title>
+  <title>王瑄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="程序员、JavaEE、大数据、智商低、能力差。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="王瑄的博客">
-<meta property="og:url" content="//litten.me/tags/GitHub/index.html">
+<meta property="og:url" content="//litten.me/page/2/index.html">
 <meta property="og:site_name" content="王瑄的博客">
 <meta property="og:description" content="程序员、JavaEE、大数据、智商低、能力差。">
 <meta name="twitter:card" content="summary">
@@ -131,52 +131,63 @@
       <div class="body-wrap">
         
   
-  
+    <article id="post-java反射知识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/25/git入门/" class="archive-article-date">
-  	<time datetime="2016-10-25T09:36:33.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/25/git入门/">git入门</a>
+      <a class="article-title" href="/2016/10/25/java反射知识/">java反射知识</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Class类的使用"><a href="#Class类的使用" class="headerlink" title="Class类的使用"></a>Class类的使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.wx.reflect;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassDemo1</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">		<span class="comment">// Foo类的实例对象如何表示</span></div><div class="line">		Foo foo1 = <span class="keyword">new</span> Foo();</div><div class="line">		<span class="comment">// Foo这个类也是一个实例对象，Class类的实例对象，如何表示？</span></div><div class="line">		<span class="comment">// 任何一个类都是Class的实例对象，有三种表示方式：</span></div><div class="line">		<span class="comment">// 第一种：实际上是任何一个类都有一个隐含的静态成员变量class</span></div><div class="line">		Class c1 = Foo.class;</div><div class="line">		<span class="comment">// 第二种：已经知道该类对象，通过getClass()方法</span></div><div class="line">		Class c2 = foo1.getClass();</div><div class="line">		<span class="comment">/** 官网解释：c1,c2表示了Foo类的类类型(class type) </div><div class="line">			万事万物皆对象。</div><div class="line">			类也是一个对象，是Class类的对象，</div><div class="line">			这个对象我们称为该类的类类型。</div><div class="line">		**/</span></div><div class="line">		<span class="comment">// 一个类只可能是Class类的一个实例对象</span></div><div class="line">		System.out.println(c1 == c2); <span class="comment">// true</span></div><div class="line">		<span class="comment">// 第三种：</span></div><div class="line">		Class c3 = Class.forName(<span class="string">"com.wx.reflect.Foo"</span>);</div><div class="line">		System.out.println(c1 == c3); <span class="comment">// true</span></div><div class="line">		<span class="comment">// 可以通过类的类类型创建该类的实例</span></div><div class="line">		Foo foo2 = (Foo)c1.newInstance();</div><div class="line">		foo2.print();</div><div class="line"> 	&#125;	</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"this is foo method!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/10/25/java反射知识/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/10/25/java反射知识/" class="archive-article-date">
+  	<time datetime="2016-10-25T09:12:33.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-25</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  
 
 
       </div>
@@ -198,10 +209,10 @@
 		fancybox: true,
 		mathjax: false,
 		animate: true,
-		isHome: false,
+		isHome: true,
 		isPost: false,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		root: "/",
